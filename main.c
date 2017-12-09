@@ -136,7 +136,19 @@ int main(int argc, char *argv[]) {
             exit(-1);
         }
     }
+    // Free attribute and wait for the other threads
+    //pthread_attr_destroy(&attr);
+    for (t = 0; t < NUM_THREADS; t++) {
+        rc = pthread_join(thread[t], &status);
+        if (rc) {
+            printf("ERROR; return code from pthread_join() is %d\n", rc);
+            exit(-1);
+        }
+        if (t == 0) printf("The average value is %d\n", thread_data_array[t].value);
+        if (t == 1) printf("The minimum value is %d\n", thread_data_array[t].value);
+        if (t == 2) printf("The maximum value is %d\n", thread_data_array[t].value);
 
+    }
     printf("Main: program completed. Exiting.\n");
     pthread_exit(NULL);
 }

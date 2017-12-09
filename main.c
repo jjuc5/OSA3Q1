@@ -49,3 +49,54 @@ void *CalcAvg(void *threadarg)
  	
     pthread_exit(NULL);
 }
+
+void *CalcMin(void *threadarg)
+{
+
+    struct thread_data *mydata;
+    mydata = (struct thread_data *) threadarg;
+    int val;
+	int i = 0;
+	int min = atoi(mydata->array1[0]);
+
+
+	while(strlen(mydata->array1[i]) != 0)
+	{
+		val = atoi(mydata->array1[i]);
+		if (val < min)
+        {
+            min = val;
+            
+        }
+	    i++;
+	}
+	mydata->value = min;
+    
+
+    pthread_exit(NULL);
+}
+
+void *CalcMax(void *threadarg)
+{
+    struct thread_data *mydata;
+    mydata = (struct thread_data *) threadarg;
+    int val;
+	int i = 0;
+	int max = atoi(mydata->array1[0]);
+
+
+	while(strlen(mydata->array1[i]) != 0)
+	{
+		val = atoi(mydata->array1[i]);
+		if (val > max)
+        {
+            max = val;
+        }
+	    i++;
+	}
+	mydata->value = max;
+    
+
+    pthread_exit(NULL);
+	
+}
